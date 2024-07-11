@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Clicker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f0f0f0;
+        margin-top: 50px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        font-size: 32px;
+    }
+    #cookie {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #f9c784;
+        border: 5px solid #e89b2d;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+    }
+    #cookie:hover {
+        transform: scale(1.1);
+    }
+    #cookie:focus {
+        outline: none;
+    }
+    #cookie-img {
+        width: 100px;
+        margin-top: 20px;
+    }
+    .stats {
+        margin-top: 20px;
+    }
+    button {
+        font-size: 18px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+        transition: background-color 0.2s ease-in-out;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Cookie Clicker</h1>
+    <div>
+        <div id="cookie" onclick="clickCookie()" tabindex="0">
+            <img src="cookie.png" alt="Cookie" id="cookie-img">
+        </div>
+        <p>Cookies: <span id="cookieCount">0</span></p>
+        <p>Cookies per Click: <span id="cookiesPerClick">1</span></p>
+        <p>Factories: <span id="factoryCount">0</span></p>
+        <p>Cookies per Second: <span id="cookiesPerSecond">0</span></p>
+        <button onclick="buyFactory()">Buy Factory ($10)</button>
+    </div>
+</div>
+
+<script>
+    // Initialize variables
+    let cookies = 0;
+    let cookiesPerClick = 1;
+    let factoryCost = 10;
+    let factoryCount = 0;
+    let cookiesPerSecond = 0;
+
+    // Function to update cookie count
+    function updateCookies() {
+        document.getElementById("cookieCount").textContent = cookies;
+        document.getElementById("cookiesPerClick").textContent = cookiesPerClick;
+        document.getElementById("factoryCount").textContent = factoryCount;
+        document.getElementById("cookiesPerSecond").textContent = cookiesPerSecond;
+    }
+
+    // Function to handle clicking the cookie
+    function clickCookie() {
+        cookies += cookiesPerClick;
+        updateCookies();
+    }
+
+    // Function to handle buying factories
+    function buyFactory() {
+        if (cookies >= factoryCost) {
+            factoryCount++;
+            cookies -= factoryCost;
+            cookiesPerSecond++;
+            factoryCost = Math.floor(factoryCost * 1.2); // Increase factory cost
+            updateCookies();
+            startAutoCookieProduction();
+        }
+    }
+
+    // Function to start automatic cookie production
+    function startAutoCookieProduction() {
+        setInterval(function() {
+            cookies += cookiesPerSecond;
+            updateCookies();
+        }, 1000); // Update every second
+    }
+</script>
+
+</body>
+</html>
